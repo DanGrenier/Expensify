@@ -1,7 +1,14 @@
 //entry point is? where to output final bundle file
 const path = require('path');
 
-module.exports = {
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CSSExtract = new ExtractTextPlugin('styles.css');
+
+module.exports = (env) => {
+  
+    const isProduction = env === 'production'
+
+  return {
   entry: './src/app.js',
   output: {
       path: path.join(__dirname,'public'),
@@ -14,18 +21,32 @@ module.exports = {
       exclude: /node_module/ 
     },{
       test: /\.s?css$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        'sass-loader'
+      use: CSSExtract.extract({
+        use: [
+         {
+           loader: 'css-loader',
+           options: {
+             sourceMap: true
+           }
+         },
+         {
+           loader:   'sass-loader',
+           options: {
+             sourceMap: true
+           }
+         }
       ]
+    })
     }]
 
   },
-    devtool: 'cheap-module-eval-source-map',
+  plugins: [
+  CSSExtract
+  ],
+    devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {
       contentBase: path.join(__dirname,'public'),
       historyApiFallback: true
     }
-
+  };
 };
