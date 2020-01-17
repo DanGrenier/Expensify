@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
-import {addExpense, removeExpense, editExpense} from './actions/expenses';
+import {startSetExpenses} from './actions/expenses';
 import {setTextFilter,sortByAmount,sortByDate,setStartDate,setEndDate} from './actions/filters';
 import moment from 'moment';
 import getVisibleExpenses from './selectors/expenses';
@@ -21,4 +21,9 @@ const jsx = (
 
 );
 
-ReactDOM.render(jsx,document.getElementById("app"));
+ReactDOM.render(<p>Loading...</p>,document.getElementById("app"));
+store.dispatch(startSetExpenses()).then(()=> {
+    ReactDOM.render(jsx,document.getElementById("app"));
+})
+
+
