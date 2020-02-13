@@ -84,11 +84,12 @@ export const startSetExpenses = () => {
           .then((snapshot) => {
             const expenses = [];
             snapshot.forEach((childSnap) => {
+                //console.log(childSnap.val());
               expenses.push({
                 id: childSnap.key,
                 ...childSnap.val()
                 });
-            })
+            });
             dispatch(setExpenses(expenses));
           })
     };
