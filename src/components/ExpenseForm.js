@@ -17,7 +17,6 @@ export default class ExpenseForm extends React.Component {
             calendarFocused: false,
             errorMsg: ''
         };
-
     }
     
 
@@ -77,10 +76,11 @@ export default class ExpenseForm extends React.Component {
     }
     render () {
         return (
-            <div>
-              {this.state.errorMsg && <p>{this.state.errorMsg}</p>}
-              <form onSubmit={this.onSubmit}>
+             
+              <form className="form" onSubmit={this.onSubmit}>
+              {this.state.errorMsg && <p className="form__error">{this.state.errorMsg}</p>}
               <input 
+              className="text-input"
                 type = "text"
                 placeholder = "Description"
                 autoFocus 
@@ -88,6 +88,7 @@ export default class ExpenseForm extends React.Component {
                 onChange={this.onDescriptionChange}/>
               <input
                 type="text"
+                className="text-input"
                 placeholder="Amount"
                 value={this.state.amount}
                 onChange={this.onAmountChanged} />
@@ -100,15 +101,17 @@ export default class ExpenseForm extends React.Component {
                 isOutsideRange={(day) => false} />  
               
                 <textarea
+                className="textarea"
                 placeholder="Add a note for your expense (optional)"
                 value={this.state.note} 
                 onChange={this.onNoteChange}>
                 
                 </textarea>
-                <button>Add Expense</button>
+                <div>
+                  <button className="button">Save Expense</button>
+                </div>
               </form>
               
-            </div>
         )
     }
 }
